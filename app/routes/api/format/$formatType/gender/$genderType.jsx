@@ -5,7 +5,7 @@ import axios from "axios";
 export const loader = async ({ params }) => {
   // handle "GET" request
   const res = await axios.get(
-    `https://randomuser.me/api/?format=json&results=50&exc=email,login,registered,phone,cell,picture,id`
+    `https://randomuser.me/api/?format=json&results=5000&exc=email,login,registered,phone,cell,picture,id`
   );
 
   let data = null;
