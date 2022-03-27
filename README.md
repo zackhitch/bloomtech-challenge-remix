@@ -1,4 +1,6 @@
-# Welcome to Remix!
+# Welcome to Zack Hitchcock's BloomTech Challenge!
+
+### This challenge was completed with Remix
 
 - [Remix Docs](https://remix.run/docs)
 
@@ -7,14 +9,15 @@
 From your terminal:
 
 ```sh
+npm install
 npm run dev
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+This starts the app in development mode, rebuilding assets on file changes.
 
 ## Deployment
 
-First, build your app for production:
+First, build the app for production:
 
 ```sh
 npm run build
@@ -26,7 +29,7 @@ Then run the app in production mode:
 npm start
 ```
 
-Now you'll need to pick a host to deploy it to.
+To deploy, you need to pick a host to deploy it to.
 
 ### DIY
 
@@ -39,7 +42,7 @@ Make sure to deploy the output of `remix build`
 
 ### Using a Template
 
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
+When starting with `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
 
 ```sh
 cd ..
