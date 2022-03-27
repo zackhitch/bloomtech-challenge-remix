@@ -23,7 +23,7 @@ as specified by the user in the parameters.
 
 - `$HOST/api/format/$FORMAT_TYPE/gender/$GENDER_TYPE`
 
-  - Where `$HOST` is either `localhost` during development or a url when deployed
+  - Where `$HOST` is either `localhost` during development or `https://bloomtech-zh-challenge.herokuapp.com` deployed
   - `$FORMAT_TYPE` may be either `json` or `csv` for the preferred return format
   - `$GENDER_TYPE` may be either `female` or `male`
 
