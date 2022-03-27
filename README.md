@@ -15,6 +15,22 @@ npm run dev
 
 This starts the app in development mode, rebuilding assets on file changes.
 
+## API
+
+There are a few endpoints which will return data in either JSON or CSV
+
+as specified by the user in the parameters.
+
+- `$HOST/api/format/$FORMAT_TYPE/gender/$GENDER_TYPE`
+
+  - Where `$HOST` is either `localhost` during development or a url when deployed
+  - `$FORMAT_TYPE` may be either `json` or `csv` for the preferred return format
+  - `$GENDER_TYPE` may be either `female` or `male`
+
+- `$HOST/api/format/$FORMAT_TYPE/gender/$GENDER_TYPE/location/$LOCATION_TYPE`
+  - Where `$HOST, $FORMAT_TYPE, and $GENDER_TYPE` are the same as above
+  - `$LOCATION_TYPE` may be either `country` or `us` where 'country' returns global results and 'us' returns US state results
+
 ## Deployment
 
 First, build the app for production:
