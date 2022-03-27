@@ -2,7 +2,7 @@ import { json } from "remix";
 
 import axios from "axios";
 
-export const loader = async ({ request }) => {
+export const loader = async ({ params }) => {
   // handle "GET" request
   const res = await axios.get(
     "https://randomuser.me/api/?results=5000&exc=email,login,registered,phone,cell,picture,id"
@@ -10,5 +10,12 @@ export const loader = async ({ request }) => {
   // console.log(res);
   const data = res.data.results;
 
-  return json(data, { success: true }, 200);
+  console.log(params);
+
+  const genderInPopulation = data.filter(
+    (user) => user.gender === params.genderType
+  );
+  const genderData = genderInPopulation;
+
+  return json(genderData, { success: true }, 200);
 };
