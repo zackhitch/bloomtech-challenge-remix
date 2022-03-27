@@ -23,11 +23,11 @@ ChartJS.register(
   Title
 );
 
+// loader acts as the apps api interface.
 export const loader = async () => {
   const res = await axios.get(
     "https://randomuser.me/api/?results=5000&exc=email,login,registered,phone,cell,picture,id"
   );
-  // console.log(res);
   const data = res.data.results;
 
   let totalPopulation = 0;
@@ -53,6 +53,9 @@ export const loader = async () => {
     "66-85": 0,
     "Over 85": 0,
   };
+
+  // Looping over data instead of filtering through as I can
+  // set multiple data points efficiently.
   for (let i = 0; i < data.length; i++) {
     if (data[i].gender === "female") {
       numberOfFemales++;
@@ -60,10 +63,15 @@ export const loader = async () => {
     if (data[i].gender === "male") {
       numberOfMales++;
     }
+    // Setting countries' population count by checking
+    // if a country exists in the array,
+    // if country does not exist set population to 1
+    // else increment.
     typeof populationByCountry[data[i].location.country] === "undefined"
       ? (populationByCountry[data[i].location.country] = 1)
       : populationByCountry[data[i].location.country]++;
 
+    // Same as above, but for US States instead of by country.
     if (data[i].location.country === "United States") {
       typeof populationByUsStates[data[i].location.state] === "undefined"
         ? (populationByUsStates[data[i].location.state] = 1)
@@ -71,6 +79,7 @@ export const loader = async () => {
     }
 
     let userAge = data[i].dob.age;
+    // Increment population by age groupings defined above.
     if (userAge < 16) {
       populationByAgeGroup["Under 16"]++;
     }
@@ -95,6 +104,7 @@ export const loader = async () => {
   percentFemale = numberOfFemales / data.length;
   percentMale = numberOfMales / data.length;
 
+  // Calculates the age group's percentages of total population.
   for (const key in populationByAgeGroup) {
     if (populationByAgeGroup.hasOwnProperty(key)) {
       percentByAgeGroup[key] = populationByAgeGroup[key] / data.length;
@@ -104,12 +114,17 @@ export const loader = async () => {
   const topMostPopulatedCountries = Object.fromEntries(
     Object.entries(populationByCountry).sort(([, a], [, b]) => b - a)
   );
+
+  // Creates an array from the populationByCountry object in descending order.
   const topCountriesArray = Object.entries(populationByCountry).sort(
     ([, a], [, b]) => b - a
   );
   console.log(topCountriesArray);
   let totalPopOfTop5Countries = 0;
   let top5PopulousCountries = [];
+
+  // Gets top 5 most populous countries from the topCountriesArray.
+  // Could also use a slice on the array instead.
   for (let j = 0; j < 5; j++) {
     totalPopOfTop5Countries += topCountriesArray[j][1];
     top5PopulousCountries.push(topCountriesArray[j][0]);
@@ -184,8 +199,11 @@ export const loader = async () => {
 };
 
 export default function UserDataIndexRoute() {
+  // Remix hook to use the loader function's data.
   const data = useLoaderData();
 
+  // The following are helper methods for generating
+  // options and data points for the charts.
   const totalPopChartOptions = {
     responsive: true,
     plugins: {
@@ -293,6 +311,7 @@ export default function UserDataIndexRoute() {
       },
     ],
   };
+  // *End helper methods for charts
 
   return (
     <div className="mainContainer">

@@ -67,10 +67,13 @@ export const loader = async ({ params }) => {
       (user) => user.gender === params.genderType
     );
     genderData = genderInPopulation;
-    const replacer = (key, value) => (value === null ? "" : value); // specify how to handle null values
+    // Specify how to handle null values.
+    const replacer = (key, value) => (value === null ? "" : value);
+    // Generate CSV header row.
     const header = Object.keys(genderData[0]);
     const csv = [
-      header.join(","), // header row first
+      // Header row first.
+      header.join(","),
       ...genderData.map((row) =>
         header
           .map((fieldName) => JSON.stringify(row[fieldName], replacer))
