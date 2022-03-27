@@ -5,7 +5,7 @@ import axios from "axios";
 export const loader = async ({ params }) => {
   // handle "GET" request
   const res = await axios.get(
-    `https://randomuser.me/api/?format=${params.formatType}&results=50&exc=email,login,registered,phone,cell,picture,id`
+    `https://randomuser.me/api/?format=json&results=50&exc=email,login,registered,phone,cell,picture,id`
   );
 
   let data = null;
@@ -19,10 +19,22 @@ export const loader = async ({ params }) => {
     genderData = genderInPopulation;
     return json(genderData, { success: true }, 200);
   } else if (params.formatType === "csv") {
-    data = res;
-    genderInPopulation = data;
+    data = res.data.results;
+    genderInPopulation = data.filter(
+      (user) => user.gender === params.genderType
+    );
     genderData = genderInPopulation;
-    return new Response(genderData.data);
+    const replacer = (key, value) => (value === null ? "" : value); // specify how to handle null values
+    const header = Object.keys(genderData[0]);
+    const csv = [
+      header.join(","), // header row first
+      ...genderData.map((row) =>
+        header
+          .map((fieldName) => JSON.stringify(row[fieldName], replacer))
+          .join(",")
+      ),
+    ].join("\r\n");
+    return new Response(csv);
   }
   console.log(params);
 };
